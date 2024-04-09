@@ -23,6 +23,13 @@ function render() {
 const favoriteBooks = [];
 //console.log(favoriteBooks);
 
+// Dodajemy pustą tabele filters
+const filters = [];
+// Przygotujemy referencje do formularza w .filters.
+const filtersForm = document.querySelector('.filters');
+//console.log('Filter', filtersForm);
+
+
 /* [Kod do ćwiczenia 2 i 3 - dodanie do ulubionych i usunięcie z listy]
 // Dodajemy funkcje initActions
 function initActions(){
@@ -101,14 +108,16 @@ function initActions() {
         }
     });
 
-
-    //[Kod do ćwiczenia 5]
-    // Dodajemy pustą tabele filters
+    
+   /* 
+   // Dodajemy pustą tabele filters
     const filters = [];
     // Przygotujemy referencje do formularza w .filters.
     const filtersForm = document.querySelector('.filters');
     //console.log('Filter', filtersForm);
-
+    */
+   
+    //[Kod do ćwiczenia 5]
     filtersForm.addEventListener('click', function(event) {
         if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox' && event.target.name === 'filter') {
             //console.log(event.target.value);
@@ -131,18 +140,47 @@ function initActions() {
                     //console.log('Wartość usunięta z tabeli filters:', value);
                 }
             }
-            //console.log('Aktualne filtry', filters);
+            console.log('Aktualne filtry', filters);
         }
     })
 }
-
+/*
 // Tworzymy funkcje filterBooks
 function filterBooks(){
+    // Tworzymy pustą tabelę dla przechowywania wybranych elementów
+    const selectedFilters = [];
+
+    // Tworzymy referencje do każdego checkboxu
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');  
+
+    //Przechodzimy po znalezionych checkboxach 
+    checkboxes.forEach((checkbox) => {
+        // Dodajemy nasłuchiwacza do zmian w checkboxsie
+        checkbox.addEventListener('change', filterBooks);
+        // Dodajemy ich wartość do tabeli
+        selectedFilters.push(checkbox.value);
+    });
     
+    //Tworzymy pętle dla przechodzenia po wszystkich elementach dataSource.books
+    for (let bookDetails in dataSource.books){
+    
+        // Stworzymy zmienną shouldBeHidden, która domyślnie równa false
+        let shouldBeHidden = false;
+        console.log('hidden', shouldBeHidden);
 
-
+        // Przechodzimy po tablicy filters
+        for (const filetr of filters){
+            // Ustaliamy czy filter pasuje do info o danej książce
+            
+            // Jeśli dana właściwość powinna być true, a nie jest, to należy zmienić shoudBeHidden na true
+            if(!condition) {
+                shouldBeHidden = true;
+                break;
+              }
+        }
+    }
 }
-
+*/
 
 
 
