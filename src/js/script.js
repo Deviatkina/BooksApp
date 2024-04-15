@@ -1,7 +1,6 @@
 'use strict';
    
 // Referencja do szablonu oraz listy .books-list
-// ?? const template = document.getElementById('template-book');
 const booksWrapper = document.querySelector('.books-list');
 
 //Dodajemy funkcje Render
@@ -25,164 +24,104 @@ const favoriteBooks = [];
 
 // Dodajemy pustą tabele filters
 const filters = [];
-// Przygotujemy referencje do formularza w .filters.
-const filtersForm = document.querySelector('.filters');
-//console.log('Filter', filtersForm);
-
-
-/* [Kod do ćwiczenia 2 i 3 - dodanie do ulubionych i usunięcie z listy]
-// Dodajemy funkcje initActions
-function initActions(){
-    // Tworzymy referencje do listy wszystkich elementów .book__image w liście .bookList
-
-    const booksImage = document.querySelectorAll('.book .book__image');
-    //console.log('Books images:', booksImage); // sprawdzamy czy elementy są prawidłowo wybrane
-
-
-    // Przechodzimy po każdym elemencie z tej listy
-    for (let imageElem of booksImage){
-    // Dla każdego z tych elementów dodaję nasłuchiwać dblclick
-        imageElem.addEventListener('dblclick', function(event){
-        //console.log('Adding event listener to:', imageElem); // sprawdzamy czy nasłuchiwać zostaw dodany do każdego elementu
-
-
-            //zatrzymujemy domyślne zachowywania przeglądarki
-            event.preventDefault();
-           
-            //pobierze z jego data-id idęntyfikator książki
-            const bookId = this.getAttribute('data-id');
-            //console.log('Book id:', bookId); //Sprawdzimy czy prawidlowo pobierano atrybut data-id
-        
-            //Sprawdzamy czy ta książka już jest obecna na liście ulubionysh
-            if (!this.classList.contains('favorite')) {
-                // Jeśli książki nie ma na liscie ulubionych, dodajemy ją
-                this.classList.add('favorite');
-                favoriteBooks.push(bookId);
-                //console.log('Dodana ksiązka do listy ulubionych:', bookId);
-            } else {  
-                // Jeśli książka już jest na liście ulubionych, usuwamy ją
-                this.classList.remove('favorite');
-
-                const index = favoriteBooks.indexOf(bookId);
-                if (index !== -1) {
-                    favoriteBooks.splice(index, 1);
-                //console.log('Książka usunięta z listy ulubionych:', bookId);
-                }
-            } 
-            //console.log('favorites', favoriteBooks);
-
-        });
-    }
-}*/
 
 // [Zmieniono kod initActions w/w ćwiczenia 4]
 // Dodajemy funkcje initActions
 function initActions() {
-    // Tworzymy referencje do całej listy książek
-    const bookList = booksWrapper; 
-    // Dodajemy nasłuchiwać dblclick na całą listę książek (ul)
-    bookList.addEventListener('dblclick', function(event) { 
-        // Sprawdzamy, czy podwójne kliknięcie na obrazku czy na jego elementy podrzędne (elementy wewnętrzne)
-        if (event.target.classList.contains('book__image') || event.target.offsetParent.classList.contains('book__image')) { 
-            // Zatrzymujemy domyślne zachowywania przeglądarki
-            event.preventDefault(); 
-            // Wyznaczamy data-id identyfikatora książki
-            const bookId = event.target.getAttribute('data-id') || event.target.offsetParent.getAttribute('data-id'); 
+  // Tworzymy referencje do całej listy książek
+  const bookList = booksWrapper; 
 
-            //Sprawdzamy czy książka obecna na liście ulubionych
-            if (!event.target.classList.contains('favorite')) {
-                // Jeśli książki nie ma na liście, to ona zostanie dodana
-                event.target.classList.add('favorite');
-                favoriteBooks.push(bookId);
-                //console.log('Książka została dodana do ulubionych:', bookId);
-            } else {
-                // Jeśli książka obecna na liście, to ona zostanie usunięta z listy
-                event.target.classList.remove('favorite');
-                const index = favoriteBooks.indexOf(bookId);
-                if (index !== -1) {
-                    favoriteBooks.splice(index, 1);
-                    //console.log('Książka została usunięta z listy ulubionych', bookId);
-                }
-            }
-            console.log('Aktualna lista ulubionych książęk:', favoriteBooks);
+  //Przygotowano referencje do formularza w .filters.
+  const filtersForm = document.querySelector('.filters');
+
+  // Dodajemy nasłuchiwać dblclick na całą listę książek (ul)
+  bookList.addEventListener('dblclick', function(event) { 
+    // Sprawdzamy, czy podwójne kliknięcie na obrazku czy na jego elementy podrzędne (elementy wewnętrzne)
+    if (event.target.classList.contains('book__image') || event.target.offsetParent.classList.contains('book__image')) { 
+
+      const targetElem = event.target.classList.contains('book__image') ? event.target : event.target.offsetParent;
+
+      // Zatrzymujemy domyślne zachowywania przeglądarki
+      event.preventDefault(); 
+      // Wyznaczamy data-id identyfikatora książki
+      const bookId = targetElem.getAttribute('data-id');
+
+      //Sprawdzamy czy książka obecna na liście ulubionych
+      if (!targetElem.classList.contains('favorite')) {
+        // Jeśli książki nie ma na liście, to ona zostanie dodana
+        targetElem.classList.add('favorite');
+        favoriteBooks.push(bookId);
+        //console.log('Książka została dodana do ulubionych:', bookId);
+      } else {
+        // Jeśli książka obecna na liście, to ona zostanie usunięta z listy
+        targetElem.classList.remove('favorite');
+        const index = favoriteBooks.indexOf(bookId);
+        if (index !== -1) {
+          favoriteBooks.splice(index, 1);
+          //console.log('Książka została usunięta z listy ulubionych', bookId);
         }
-    });
+      }
+      console.log('Aktualna lista ulubionych książęk:', favoriteBooks);
+    }
+  });
 
-    
-   /* 
-   // Dodajemy pustą tabele filters
-    const filters = [];
-    // Przygotujemy referencje do formularza w .filters.
-    const filtersForm = document.querySelector('.filters');
-    //console.log('Filter', filtersForm);
-    */
-   
-    //[Kod do ćwiczenia 5]
-    filtersForm.addEventListener('click', function(event) {
-        if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox' && event.target.name === 'filter') {
-            //console.log(event.target.value);
+  //[Kod do ćwiczenia 5]
+  filtersForm.addEventListener('click', function(event) {
+    if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox' && event.target.name === 'filter') {
+      //console.log(event.target.value);
 
-            //Wartość value do checkboxu
-            const value = event.target.value;
-            //Wlaściwość checked do checkboxu 
-            const checked = event.target.checked;
+      //Wartość value do checkboxu
+      const value = event.target.value;
+      //Wlaściwość checked do checkboxu 
+      const checked = event.target.checked;
 
-            //Sprawdzamy czy checkbox jest zaznaczony
-            if(checked){
-                //jeśli tak, to wysyłamy jeogo wartść do tabeli filters
-                filters.push(value);
-                //console.log('Wartość dodana do tabeli filters:', value);
-            } else {
-                //jeśli nie zaznaczono, to usuwamy jego wartość z tabeli filters
-                const index = filters.indexOf(value);
-                if (index !== -1) {
-                    filters.splice(index, 1);
-                    //console.log('Wartość usunięta z tabeli filters:', value);
-                }
-            }
-            console.log('Aktualne filtry', filters);
+      //Sprawdzamy czy checkbox jest zaznaczony
+      if(checked){
+        //jeśli tak, to wysyłamy jeogo wartść do tabeli filters
+        filters.push(value);
+        //console.log('Wartość dodana do tabeli filters:', value);
+      } else {
+        //jeśli nie zaznaczono, to usuwamy jego wartość z tabeli filters
+        const index = filters.indexOf(value);
+        if (index !== -1) {
+          filters.splice(index, 1);
+          //console.log('Wartość usunięta z tabeli filters:', value);
         }
-    })
+      }
+
+      filterBooks();
+      console.log('Aktualne filtry', filters);
+    }
+  });
 }
-/*
+
+
 // Tworzymy funkcje filterBooks
 function filterBooks(){
-    // Tworzymy pustą tabelę dla przechowywania wybranych elementów
-    const selectedFilters = [];
-
-    // Tworzymy referencje do każdego checkboxu
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');  
-
-    //Przechodzimy po znalezionych checkboxach 
-    checkboxes.forEach((checkbox) => {
-        // Dodajemy nasłuchiwacza do zmian w checkboxsie
-        checkbox.addEventListener('change', filterBooks);
-        // Dodajemy ich wartość do tabeli
-        selectedFilters.push(checkbox.value);
-    });
+  //Tworzymy pętle dla przechodzenia po wszystkich elementach dataSource.books
+  for (let book of dataSource.books){
     
-    //Tworzymy pętle dla przechodzenia po wszystkich elementach dataSource.books
-    for (let bookDetails in dataSource.books){
-    
-        // Stworzymy zmienną shouldBeHidden, która domyślnie równa false
-        let shouldBeHidden = false;
-        console.log('hidden', shouldBeHidden);
+    // Stworzymy zmienną shouldBeHidden, która domyślnie równa false
+    let shouldBeHidden = false;
+    console.log('hidden', shouldBeHidden);
 
-        // Przechodzimy po tablicy filters
-        for (const filetr of filters){
-            // Ustaliamy czy filter pasuje do info o danej książce
-            
-            // Jeśli dana właściwość powinna być true, a nie jest, to należy zmienić shoudBeHidden na true
-            if(!condition) {
-                shouldBeHidden = true;
-                break;
-              }
-        }
+    // Przechodzimy po tablicy filters
+    for (const detail of filters){
+      // Jeśli dana właściwość powinna być true, a nie jest, to należy zmienić shoudBeHidden na true
+      if(!book.details[detail]) {
+        shouldBeHidden = true;
+        break;
+      }
     }
+    const bookElem = document.querySelector('[data-id="' + book.id + '"');
+    // Tworzymy pętle warunkową która sprawdzi wartość shouldBeHidden
+    if (shouldBeHidden)
+      bookElem.classList.add('hidden');
+    else 
+      bookElem.classList.remove('hidden');
+
+  }
 }
-*/
-
-
 
 
 
