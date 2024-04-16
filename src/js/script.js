@@ -1,10 +1,40 @@
 'use strict';
    
+// Tworzymy klasse BookList
+class BooksList {
+    constructor(id, data) {
+        const thisBooksList = this;
+
+        thisBooksList.id = id;
+        thisBooksList.data = data;
+
+        thisBooksList.initData();
+        thisBooksList.getElements();
+        thisBooksList.renderInMenu();
+        thisBooksList.initActions();
+        thisBooksList.filtersForms();
+        thisBooksList.filterBooks();
+
+        console.log('new BookList:', thisBooksList);
+    }
+
+    initData() {
+        this.data = dataSource.books;
+    }
+
+    getElements() {
+        const thisBooksList = this;
+
+        
+
+    }
+
 // Referencja do szablonu oraz listy .books-list
-const booksWrapper = document.querySelector('.books-list');
+        const booksWrapper = document.querySelector('.books-list');
+
 
 //Dodajemy funkcje Render
-function render() {    
+renderInMenu() {    
   // Wewnątrz funkcji tworzymy pętlę for...of dla przejścia 
   // po każdej książce i otrzymaniu informacji  
   for (let bookElem of dataSource.books){
@@ -27,7 +57,7 @@ const filters = [];
 
 // [Zmieniono kod initActions w/w ćwiczenia 4]
 // Dodajemy funkcje initActions
-function initActions() {
+initActions() {
   // Tworzymy referencje do całej listy książek
   const bookList = booksWrapper; 
 
@@ -97,7 +127,7 @@ function initActions() {
 
 
 // Tworzymy funkcje filterBooks
-function filterBooks(){
+filterBooks(){
   //Tworzymy pętle dla przechodzenia po wszystkich elementach dataSource.books
   for (let book of dataSource.books){
     
@@ -125,9 +155,13 @@ function filterBooks(){
 
 
 
-// Uruchomiamy funkcje Render
-render();
+/*// Uruchomiamy funkcje Render
+renderInMenu();
 // Uruchomiamy funkcje initAction
 initActions();
 // Uruchomiamy funkcje filterBooks
 filterBooks();
+}*/
+
+//Dodana instancja do klassy
+const app = new BooksList();
